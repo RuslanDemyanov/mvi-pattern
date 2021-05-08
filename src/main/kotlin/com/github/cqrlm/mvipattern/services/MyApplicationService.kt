@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.cqrlm.mvipattern.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.cqrlm.mvipattern.MyBundle
 
 class MyApplicationService {
 
