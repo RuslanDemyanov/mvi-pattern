@@ -20,6 +20,7 @@ import ${escapeKotlinIdentifier(packageName)}.mvi.${className}State
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}ViewModel
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.merge
 import io.reactivex.subjects.PublishSubject
 import org.koin.androidx.scope.ScopeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,7 +47,7 @@ class ${className}Fragment :
     }
 
     override fun bind() {
-        compositeDisposable.add(viewModel.states().subscribe(this::render))
+        compositeDisposable.add(viewModel.states().subscribe(::render))
         viewModel.subscribeToIntents(intents())
     }
 
@@ -54,12 +55,10 @@ class ${className}Fragment :
     }
 
     override fun intents(): Observable<${className}Intent> =
-        Observable.merge(
-            listOf(
-                initialIntent(),
-                exitIntent()
-            )
-        )
+        listOf(
+            initialIntent(),
+            exitIntent()
+        ).merge()
 
     private fun initialIntent(): Observable<${className}Intent> =
         Observable.just(${className}Intent.Initial)
