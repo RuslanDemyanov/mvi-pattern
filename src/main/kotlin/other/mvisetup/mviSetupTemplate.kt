@@ -15,11 +15,9 @@ import com.android.tools.idea.wizard.template.template
 
 val mviSetupTemplate
     get() = template {
-        revision = 1
         name = "MVI Full Template"
         description = "Creates a new MVI component structure."
         minApi = MIN_API
-        minBuildApi = MIN_API
         category = Category.Other
         formFactor = FormFactor.Mobile
         screens = listOf(

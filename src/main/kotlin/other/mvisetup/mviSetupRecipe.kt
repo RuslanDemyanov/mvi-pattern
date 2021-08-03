@@ -29,8 +29,8 @@ fun RecipeExecutor.mviSetup(
     addAllKotlinDependencies(moduleData)
 
     val virtualFiles = ProjectRootManager.getInstance(project).contentSourceRoots
-    val virtSrc = virtualFiles.first { it.path.contains("src") }
-    val virtRes = virtualFiles.first { it.path.contains("res") }
+    val virtSrc = virtualFiles.first { it.path.contains("main/(java|kotlin)".toRegex()) }
+    val virtRes = virtualFiles.first { it.path.contains("main/res") }
     val directorySrc = PsiManager.getInstance(project).findDirectory(virtSrc)!!
     val directoryRes = PsiManager.getInstance(project).findDirectory(virtRes)!!
 
