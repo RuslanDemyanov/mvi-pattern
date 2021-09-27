@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.github.cqrlm.mvipattern</id>
-    <name>mvi-pattern</name>
+    <name>MVI Pattern</name>
     <vendor>cqrlm</vendor>
 
     <!-- Product and plugin compatibility requirements -->
