@@ -2,6 +2,13 @@
 
 # mvi-pattern Changelog
 
+## [0.0.5] - 2022-02-07
+### Changed
+- Add Composable screen generation and update the generated Fragment code.
+- Add router side effect generation (specify container name in the wizard).
+- Add generation of initial MVI unit tests.
+- Remove the ability to generate XML layout.
+
 ## [0.0.4] - 2021-09-28
 ### Changed
 - Change the plugin icon.

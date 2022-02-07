@@ -8,9 +8,10 @@ fun viewModel(
 ) = """package ${escapeKotlinIdentifier(packageName)}.mvi
 
 import com.emlid.reachview3.mvibase.MviViewModel
+import $packageName.mvi.sideeffects.${className}RouterSideEffect
 import $packageName.mvi.sideeffects.${className}SideEffect
 
-class ${className}ViewModel : MviViewModel<
+class ${className}ViewModel(private val routerSideEffect: ${className}RouterSideEffect) : MviViewModel<
     ${className}Intent,
     ${className}Action,
     ${className}State,
@@ -32,6 +33,8 @@ class ${className}ViewModel : MviViewModel<
         }
 
     override fun sideEffects(): List<${className}SideEffect> =
-        listOf()
+        listOf(
+            routerSideEffect
+        )
 }
 """

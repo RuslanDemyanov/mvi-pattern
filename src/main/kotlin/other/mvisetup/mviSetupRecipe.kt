@@ -9,56 +9,78 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
 import org.jetbrains.kotlin.idea.KotlinLanguage
-import other.mvisetup.src.app_package.LAYOUT
 import other.mvisetup.src.app_package.action
 import other.mvisetup.src.app_package.fragment
 import other.mvisetup.src.app_package.intent
 import other.mvisetup.src.app_package.mutation
+import other.mvisetup.src.app_package.mutationTests
+import other.mvisetup.src.app_package.routerSideEffect
+import other.mvisetup.src.app_package.screen
 import other.mvisetup.src.app_package.sideEffect
 import other.mvisetup.src.app_package.state
+import other.mvisetup.src.app_package.stateTests
 import other.mvisetup.src.app_package.viewModel
+import other.mvisetup.src.app_package.viewModelTests
 
 fun RecipeExecutor.mviSetup(
     moduleData: ModuleTemplateData,
     packageName: String,
     className: String,
-    generateLayout: Boolean
+    containerName: String,
 ) {
     val project = projectInstance ?: return
 
     addAllKotlinDependencies(moduleData)
 
     val virtualFiles = ProjectRootManager.getInstance(project).contentSourceRoots
-    val virtSrc = virtualFiles.first { it.path.contains("main/(java|kotlin)".toRegex()) }
-    val virtRes = virtualFiles.first { it.path.contains("main/res") }
-    val directorySrc = PsiManager.getInstance(project).findDirectory(virtSrc)!!
-    val directoryRes = PsiManager.getInstance(project).findDirectory(virtRes)!!
+    val srcVirtualFile = virtualFiles.first { it.path.contains("main/(java|kotlin)".toRegex()) }
+    val testVirtualFile = virtualFiles.first { it.path.contains("test/(java|kotlin)".toRegex()) }
+    val srcDir = PsiManager.getInstance(project).findDirectory(srcVirtualFile)!!
+    val testDir = PsiManager.getInstance(project).findDirectory(testVirtualFile)!!
 
     fragment(packageName, className)
-        .save(directorySrc, packageName, "${className}Fragment.kt")
+        .save(srcDir, packageName, "${className}Fragment.kt")
 
+    screen(packageName, className)
+        .save(srcDir, packageName, "${className}Screen.kt")
+
+    generateMvi(srcDir, packageName, className, containerName)
+
+    generateMviTests(testDir, packageName, className)
+}
+
+fun generateMvi(srcDir: PsiDirectory, packageName: String, className: String, containerName: String) {
     action(packageName, className)
-        .save(directorySrc, "$packageName.mvi", "${className}Action.kt")
+        .save(srcDir, "$packageName.mvi", "${className}Action.kt")
 
     intent(packageName, className)
-        .save(directorySrc, "$packageName.mvi", "${className}Intent.kt")
+        .save(srcDir, "$packageName.mvi", "${className}Intent.kt")
 
     mutation(packageName, className)
-        .save(directorySrc, "$packageName.mvi", "${className}Mutation.kt")
+        .save(srcDir, "$packageName.mvi", "${className}Mutation.kt")
 
     state(packageName, className)
-        .save(directorySrc, "$packageName.mvi", "${className}State.kt")
+        .save(srcDir, "$packageName.mvi", "${className}State.kt")
 
     viewModel(packageName, className)
-        .save(directorySrc, "$packageName.mvi", "${className}ViewModel.kt")
+        .save(srcDir, "$packageName.mvi", "${className}ViewModel.kt")
 
     sideEffect(packageName, className)
-        .save(directorySrc, "$packageName.mvi.sideeffects", "${className}SideEffect.kt")
+        .save(srcDir, "$packageName.mvi.sideeffects", "${className}SideEffect.kt")
 
-    if (generateLayout) {
-        LAYOUT
-            .save(directoryRes, "layout", "fragment_${className.camelToSnakeCase()}.xml")
-    }
+    routerSideEffect(packageName, className, containerName)
+        .save(srcDir, "$packageName.mvi.sideeffects", "${className}RouterSideEffect.kt")
+}
+
+fun generateMviTests(testDir: PsiDirectory, packageName: String, className: String) {
+    stateTests(packageName, className)
+        .save(testDir, packageName, "${className}StateTests.kt")
+
+    mutationTests(packageName, className)
+        .save(testDir, packageName, "${className}MutationsTests.kt")
+
+    viewModelTests(packageName, className)
+        .save(testDir, packageName, "${className}ViewModelTests.kt")
 }
 
 fun String.save(srcDir: PsiDirectory, subDirPath: String, fileName: String) {
@@ -75,12 +97,4 @@ fun List<String>.toDir(srcDir: PsiDirectory): PsiDirectory {
         result = result.findSubdirectory(it) ?: result.createSubdirectory(it)
     }
     return result
-}
-
-fun String.camelToSnakeCase(): String {
-    val camelRegex = "(?<=[a-zA-Z])[A-Z]".toRegex()
-
-    return camelRegex.replace(this) {
-        "_${it.value}"
-    }.toLowerCase()
 }

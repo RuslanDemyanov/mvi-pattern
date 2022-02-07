@@ -13,7 +13,7 @@ sealed class ${className}Mutation : MviMutation<${className}State> {
 
     object Idle : ${className}Mutation() {
 
-        override fun mutate(previousState: ${className}State): ${className}State = 
+        override fun mutate(previousState: ${className}State): ${className}State =
             previousState
     }
 }
