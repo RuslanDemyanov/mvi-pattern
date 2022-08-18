@@ -33,8 +33,8 @@ fun RecipeExecutor.mviSetup(
     addAllKotlinDependencies(moduleData)
 
     val virtualFiles = ProjectRootManager.getInstance(project).contentSourceRoots
-    val srcVirtualFile = virtualFiles.first { it.path.contains("main/(java|kotlin)".toRegex()) }
-    val testVirtualFile = virtualFiles.first { it.path.contains("test/(java|kotlin)".toRegex()) }
+    val srcVirtualFile = virtualFiles.first { it.path.contains("ReachView/app/src/main/(java|kotlin)".toRegex()) }
+    val testVirtualFile = virtualFiles.first { it.path.contains("ReachView/app/src/test/(java|kotlin)".toRegex()) }
     val srcDir = PsiManager.getInstance(project).findDirectory(srcVirtualFile)!!
     val testDir = PsiManager.getInstance(project).findDirectory(testVirtualFile)!!
 

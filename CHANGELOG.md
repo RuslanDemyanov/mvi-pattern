@@ -2,6 +2,17 @@
 
 # mvi-pattern Changelog
 
+## [0.0.6] - 2022-08-18
+### Added
+- Add Koin annotations for side effects and view model.
+
+### Changed
+- Update Composable screen generation.
+
+### Fixed
+- Fix the issue when files are generated in the wrong directory.
+- Correct generation of mutation tests.
+
 ## [0.0.5] - 2022-02-07
 ### Changed
 - Add Composable screen generation and update the generated Fragment code.

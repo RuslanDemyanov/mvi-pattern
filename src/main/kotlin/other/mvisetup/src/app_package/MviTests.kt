@@ -29,7 +29,7 @@ fun mutationTests(
     packageName: String,
     className: String,
 ) = """package ${escapeKotlinIdentifier(packageName)}
-    
+
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}Mutation
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}State
 import org.assertj.core.api.Assertions.assertThat

@@ -10,7 +10,9 @@ fun viewModel(
 import com.emlid.reachview3.mvibase.MviViewModel
 import $packageName.mvi.sideeffects.${className}RouterSideEffect
 import $packageName.mvi.sideeffects.${className}SideEffect
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class ${className}ViewModel(private val routerSideEffect: ${className}RouterSideEffect) : MviViewModel<
     ${className}Intent,
     ${className}Action,

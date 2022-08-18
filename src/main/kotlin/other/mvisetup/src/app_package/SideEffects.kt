@@ -11,7 +11,7 @@ import com.emlid.reachview3.mvibase.MviSideEffect
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}Action
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}State
 
-typealias ${className}SideEffect = MviSideEffect<${className}Action, ${className}State>
+interface ${className}SideEffect : MviSideEffect<${className}Action, ${className}State>
 """
 
 fun routerSideEffect(
@@ -25,7 +25,9 @@ import com.emlid.reachview3.navigation.containers.${containerName}
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}Action
 import ${escapeKotlinIdentifier(packageName)}.mvi.${className}State
 import io.reactivex.Observable
+import org.koin.core.annotation.Factory
 
+@Factory
 class ${className}RouterSideEffect(private val appNavigation: AppNavigation) : ${className}SideEffect {
 
     override fun execute(

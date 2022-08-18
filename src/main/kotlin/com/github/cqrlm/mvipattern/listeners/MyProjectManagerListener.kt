@@ -18,6 +18,7 @@ internal class MyProjectManagerListener : ProjectManagerListener {
     }
 
     companion object {
+
         var projectInstance: Project? = null
     }
 }
