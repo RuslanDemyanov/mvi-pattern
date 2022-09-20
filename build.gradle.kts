@@ -8,15 +8,15 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    id("org.jetbrains.kotlin.jvm") version "1.7.10"
     // gradle-intellij-plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
-    id("org.jetbrains.intellij") version "1.1.6"
+    id("org.jetbrains.intellij") version "1.9.0"
     // gradle-changelog-plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
-    id("org.jetbrains.changelog") version "1.1.2"
+    id("org.jetbrains.changelog") version "1.3.1"
     // detekt linter - read more: https://detekt.github.io/detekt/gradle.html
-    id("io.gitlab.arturbosch.detekt") version "1.18.1"
+    id("io.gitlab.arturbosch.detekt") version "1.21.0"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = properties("pluginGroup")
@@ -27,15 +27,16 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
 // Configure gradle-intellij-plugin plugin.
 // Read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
     pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
     type.set(properties("platformType"))
+
+    localPath.set(properties("localPath"))
     downloadSources.set(properties("platformDownloadSources").toBoolean())
     updateSinceUntilBuild.set(true)
 
@@ -43,39 +44,26 @@ intellij {
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
 
-// Configure gradle-changelog-plugin plugin.
-// Read more: https://github.com/JetBrains/gradle-changelog-plugin
-changelog {
-    version = properties("pluginVersion")
-    groups = emptyList()
-}
-
 // Configure detekt plugin.
 // Read more: https://detekt.github.io/detekt/kotlindsl.html
 detekt {
     config = files("./detekt-config.yml")
     buildUponDefaultConfig = true
-
-    reports {
-        html.enabled = false
-        xml.enabled = false
-        txt.enabled = false
-    }
 }
 
 tasks {
     // Set the compatibility versions to 1.8
     withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     withType<Detekt> {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     patchPluginXml {
@@ -98,10 +86,6 @@ tasks {
 
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider { changelog.getLatest().toHTML() })
-    }
-
-    runPluginVerifier {
-        ideVersions.set(properties("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
     }
 
     publishPlugin {
