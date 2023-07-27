@@ -2,6 +2,13 @@
 
 # mvi-pattern Changelog
 
+## [0.0.8] - 2023-07-26
+### Added
+- Support Android Studio Giraffe.
+
+### Changed
+- Update Fragment generation.
+
 ## [0.0.7] - 2022-09-20
 ### Changed
 - The plugin now only supports Android Studio Dolphin version.

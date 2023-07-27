@@ -12,13 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
+import androidx.fragment.app.Fragment
 import com.emlid.reachview3.navigation.ComposeFragment
 import com.emlid.reachview3.navigation.ModalFragment
 import com.emlid.reachview3.ui.theme.ReachViewTheme
-import org.koin.androidx.scope.ScopeFragment
 
 class ${className}Fragment :
-    ScopeFragment(),
+    Fragment(),
     ModalFragment,
     ComposeFragment {
 
