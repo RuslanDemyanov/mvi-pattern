@@ -2,6 +2,14 @@
 
 # mvi-pattern Changelog
 
+## [0.0.9] - 2024-03-04
+### Added
+- Support Android Studio Iguana.
+
+### Changed
+- Update Fragment generation.
+- Update Screen generation.
+
 ## [0.0.8] - 2023-07-26
 ### Added
 - Support Android Studio Giraffe.

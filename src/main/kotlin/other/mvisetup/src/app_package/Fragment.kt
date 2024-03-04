@@ -15,17 +15,14 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import com.emlid.reachview3.navigation.ComposeFragment
 import com.emlid.reachview3.navigation.ModalFragment
-import com.emlid.reachview3.ui.theme.ReachViewTheme
+import com.emlid.reachview3.ui.theme.EmlidFlowTheme
 
-class ${className}Fragment :
-    Fragment(),
-    ModalFragment,
-    ComposeFragment {
+class ${className}Fragment : Fragment(), ModalFragment, ComposeFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         ComposeView(inflater.context).apply {
             setContent {
-                ReachViewTheme {
+                EmlidFlowTheme {
                     ${className}Screen()
                 }
             }
