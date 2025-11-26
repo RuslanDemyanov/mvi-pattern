@@ -2,6 +2,19 @@
 
 # mvi-pattern Changelog
 
+## [Unreleased]
+
+### Changed
+- Migrate to IntelliJ Platform Gradle Plugin v2.x
+- Update to Gradle 9.2.1
+- Update to Kotlin 2.1.0
+- Support latest Android Studio (2024.2 Koala and newer)
+- Update GitHub Actions workflows to latest versions
+- Replace detekt/ktlint with Qodana for code quality checks
+
+### Removed
+- Removed detekt and ktlint configurations (replaced by Qodana)
+
 ## [0.0.9] - 2024-03-04
 ### Added
 - Support Android Studio Iguana.
