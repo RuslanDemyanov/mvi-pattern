@@ -11,6 +11,10 @@
 - Support latest Android Studio (2024.2 Koala and newer)
 - Update GitHub Actions workflows to latest versions
 - Replace detekt/ktlint with Qodana for code quality checks
+- Use Android Studio as base platform instead of IntelliJ IDEA Community for Android plugin compatibility
+
+### Fixed
+- Fix bundled plugin error by switching from IntelliJ IDEA Community to Android Studio as base platform
 
 ### Removed
 - Removed detekt and ktlint configurations (replaced by Qodana)
